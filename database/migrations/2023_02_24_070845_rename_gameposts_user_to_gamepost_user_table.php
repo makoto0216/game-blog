@@ -13,12 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('profiles', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('body',200);
-            $table->timestamps();
-        });
+       Schema::rename('gameposts_user', 'gamepost_user');
     }
 
     /**
@@ -28,6 +23,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profiles');
+        Schema::table('gamepost_user', function (Blueprint $table) {
+            //
+        });
     }
 };
