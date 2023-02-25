@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GamepostController;  
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +17,5 @@ use App\Http\Controllers\GamepostController;
 */
 
 Route::get('/',[GamepostController::class,'index']);
+Route::get('/gameposts/{gamepost}',[GamepostController::class ,'show']);
+Route::get('/gameposts/{user}',[GamepostController::class ,'mypage']);
