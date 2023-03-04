@@ -15,11 +15,17 @@ class Gamepost extends Model
         'user_id',
         'post_id',
         'comment_id',
+        'image_url',
     ];
     
-    public function getPaginateByLimit(int $limit_count = 2)
+    public function getPaginateByLimit(int $limit_count = 5)
     {
         return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
     
     public function comments()
@@ -27,8 +33,4 @@ class Gamepost extends Model
         return $this->hasMany(Comment::class);
     }
     
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

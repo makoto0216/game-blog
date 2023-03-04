@@ -8,19 +8,23 @@
     </head>
     <body>
         <h2>マイページ</h2>
+        <h2 class = 'username'>{{ $user->name }}</h2>
+        <p class = 'profile'>{{ $user->profile->body }}</p>
         <div class='posts'>
-            @foreach ($gameposts as $gamepost)
+            @foreach ($user->gameposts as $gamepost)
                 <div class='post'>
+                    <div class='user'>
+                        <h3 class='name'>{{ $user->name }}</h3>
+                    </div>
                     <h3 class='title'>
                         <a href="/gameposts/{{ $gamepost->id }}">{{ $gamepost->title }}</a>
                     </h3>
                     <p class='body'>{{ $gamepost->body }}</p>
                 </div>
-                <div class='user'>
-                    <h3 class='username'>{{ $gamepost->user->name }}</h3>
-                </div>
             @endforeach
         </div>
-        <div class = 'paginate'>{{ $gameposts->links() }}</div>
+        <div class="footer">
+            <a href="/">戻る</a>
+        </div>
     </body>
 </html>

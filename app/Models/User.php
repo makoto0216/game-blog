@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Auth; 
 
 class User extends Authenticatable
 {
@@ -42,6 +43,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    public function getOwnPaginateByLimit(int $limit_count = 5)
+    {
+        return $this::with('gameposts')->find(Auth::id())->gameposts()->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+    
     public function gameposts()
     {
         return $this->hasMany(Gamepost::class);
@@ -50,5 +56,10 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 }

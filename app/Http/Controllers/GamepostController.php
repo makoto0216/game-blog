@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Http\Requests\GamepostRequest;
 use App\Models\Gamepost;
 use App\Models\User;
 use App\Models\Comment;
-use App\Http\Requests\GamepostRequest;
-use Illuminate\Http\Request;
+use Cloudinary;
+
+
 
 class GamepostController extends Controller
 {
@@ -20,8 +23,23 @@ class GamepostController extends Controller
         return view('gameposts/show')->with(['gamepost' => $gamepost]);
     }
     
-    public function mypage(Gamepost $gamepost)
+    public function usermypage(Gamepost $gamepost)
     {
-        return view('gameposts/mypage')->with(['gamepost' => $gamepost]);
+        return view('gameposts/usermypage')->with(['gamepost' => $gamepost]);
+    }
+    
+    public function create()
+    {
+        return view('gameposts/create');  
+    }
+    
+    public function store(Request $request, Gamepost $gamepost)
+    {
+        $input = $request['gamepost'];
+        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        $input += ['user_id' => $request->user()->id];
+        $input += ['image_url' => $image_url];  
+        $gamepost->fill($input)->save();
+        return redirect('/gameposts/' . $gamepost->id);
     }
 }
