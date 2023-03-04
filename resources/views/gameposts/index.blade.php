@@ -12,8 +12,10 @@
             @foreach ($gameposts as $gamepost)
                 <div class='post'>
                     <div class='user'>
-                    <h3 class='username'>{{ $gamepost->user->name }}</h3>
-                </div>
+                        <h3 class='name'>
+                            <a href="/gameposts/user/{{ $gamepost->user->id }}">{{ $gamepost->user->name }}</a>
+                        </h3>
+                    </div>
                     <h3 class='title'>
                         <a href="/gameposts/{{ $gamepost->id }}">{{ $gamepost->title }}</a>
                     </h3>
@@ -22,5 +24,9 @@
             @endforeach
         </div>
         <div class = 'paginate'>{{ $gameposts->links() }}</div>
+        <div class = 'login_user'>
+            <p class = 'username'>ログインユーザー：
+            <a href="/gameposts/usermypage/{{ Auth::user()->id }}">{{ Auth::user()->name }}</a></p>
+        </div>
     </body>
 </html>

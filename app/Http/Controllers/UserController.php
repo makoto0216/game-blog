@@ -11,8 +11,13 @@ use App\Models\Profile;
 
 class UserController extends Controller
 {
-    public function index(User $user)
+    public function mypage(User $user)
     {
-    return view('gameposts/index')->with(['posts' => $user]);
+        return view('gameposts/mypage')->with(['user' => $user]);
+    }
+    
+    public function usermypage(User $user)
+    {
+        return view('user/mypage')->with(['user' => $user]);
     }
 }

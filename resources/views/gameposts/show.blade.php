@@ -18,10 +18,33 @@
             <div class='content__post'>
                 <p>{{ $gamepost->body }}</p>    
             </div>
+            <div>
+                <img src="{{ $gamepost->image_url }}" alt="画像が読み込めません。"/>
+            </div>
+            <div class="comment_confirmation">
+            <p class="post_content"><?= nl2br($gamepost['text']) ?></p>
+            <form action="/gameposts/comments" method="POST">
+                @csrf
+            <input
+                    name="gamepost_id"
+                    type="hidden"
+                    value="{{ $gamepost->id }}"
+                >
+            <textarea name="comment[body]" placeholder="コメントを入力ください"></textarea>
+                <input type="submit" value="実行"/>
+            </form>
         </div>
-        @foreach($gamepost->comments as $comment)
-            <p>{{$comment->body}}</p>
-        @endforeach
+        </div>
+        <div class='comments'>
+            <div class='comment'>
+            @foreach($gamepost->comments as $comment)
+                <div class='user'>
+                    <h3 class='name'>{{ $comment->user->name }}</h3>
+                </div>
+                <p>{{$comment->body}}</p>
+            @endforeach
+            </div>
+        </div>
         <div class="footer">
             <a href="/">戻る</a>
         </div>
