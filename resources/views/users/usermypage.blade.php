@@ -9,7 +9,13 @@
     <body>
         <h2>マイページ</h2>
         <h2 class = 'username'>{{ $user->name }}</h2>
-        <div class = 'user_edit'><a href="/profile">編集</a></div>
+        <p class = 'profile'>{{ $user->profile->body }}</p>
+        <div class = 'profile_edit'>
+            <p>プロフィール：<a href="/profile/edit">編集</a></p>
+        </div>
+        <div class = 'user_edit'>
+            <p>ユーザー情報：<a href="/profile">編集</a></p>
+        </div>
         <a href='/gameposts/create'>投稿作成</a>
         <div class="gameposts">
             @foreach ($user->gameposts as $gamepost)
@@ -21,7 +27,7 @@
                         <a href="/gameposts/{{ $gamepost->id }}">{{ $gamepost->title }}</a>
                     </h3>
                     <p class='body'>{{ $gamepost->body }}</p>
-                    <form action="/gameposts/user/{{ $gamepost->id }}" id="form_{{ $gamepost->id }}" method="post">
+                    <form action="/gameposts/delete/{{ $gamepost->id }}" id="form_{{ $gamepost->id }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="button" onclick="deletePost({{ $gamepost->id }})">delete</button> 

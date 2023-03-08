@@ -18,9 +18,11 @@
             <div class='content__post'>
                 <p>{{ $gamepost->body }}</p>    
             </div>
-            <div>
-                <img src="{{ $gamepost->image_url }}" alt="画像が読み込めません。"/>
-            </div>
+            @if($gamepost->image_url)
+                <div>
+                    <img src="{{ $gamepost->image_url }}" alt="画像が読み込めません。"/>
+                </div>
+            @endif
             <div class="comment_confirmation">
             <p class="post_content"><?= nl2br($gamepost['text']) ?></p>
             <form action="/gameposts/comments" method="POST">
@@ -30,8 +32,8 @@
                     type="hidden"
                     value="{{ $gamepost->id }}"
                 >
-            <textarea name="comment[body]" placeholder="コメントを入力ください"></textarea>
-                <input type="submit" value="実行"/>
+            <textarea name="comment[body]" placeholder="コメントを入力してください"></textarea>
+                <input type="submit" value="コメント"/>
             </form>
         </div>
         </div>
