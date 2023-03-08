@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('gameposts', function (Blueprint $table) {
-            $table->string('image_url');
+            $table->string('image_url')->nullable();
+            $table->string('icon_url')->default(0);
         });
     }
 

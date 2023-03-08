@@ -36,10 +36,19 @@ class GamepostController extends Controller
     public function store(Request $request, Gamepost $gamepost)
     {
         $input = $request['gamepost'];
-        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        if($request->file('image')){ 
+            $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $input += ['user_id' => $request->user()->id];
+            $input += ['image_url' => $image_url];
+        }
         $input += ['user_id' => $request->user()->id];
-        $input += ['image_url' => $image_url];  
         $gamepost->fill($input)->save();
         return redirect('/gameposts/' . $gamepost->id);
+    }
+    
+    public function delete(Gamepost $gamepost)
+    {
+    $gamepost->delete();
+    return redirect('/gameposts/usermypage/'. $gamepost->user->id);
     }
 }

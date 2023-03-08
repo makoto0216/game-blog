@@ -18,6 +18,6 @@ class UserController extends Controller
     
     public function usermypage(User $user)
     {
-        return view('user/mypage')->with(['user' => $user]);
+        return view('users/usermypage')->with(['user' => $user]);
     }
 }

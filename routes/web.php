@@ -31,7 +31,7 @@ Route::controller(GamepostController::class)->middleware(['auth'])->group(functi
     Route::get('/gameposts/create','create')->name('create'); 
     Route::get('/gameposts/{gamepost}','show')->name('show');
     Route::post('/gameposts','store')->name('store'); 
-    Route::delete('/gameposts/user/{gamepost}','delete')->name('delete');
+    Route::delete('/gameposts/delete/{gamepost}','delete')->name('delete');
 });
 
 Route::controller(UserController::class)->middleware(['auth'])->group(function(){
