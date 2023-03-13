@@ -30,8 +30,7 @@
             <input
                     name="gamepost_id"
                     type="hidden"
-                    value="{{ $gamepost->id }}"
-                >
+                    value="{{ $gamepost->id }}">
             <textarea name="comment[body]" placeholder="コメントを入力してください"></textarea>
                 <input type="submit" value="コメント"/>
             </form>

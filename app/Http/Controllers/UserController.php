@@ -20,4 +20,5 @@ class UserController extends Controller
     {
         return view('users/usermypage')->with(['user' => $user]);
     }
+    
 }
