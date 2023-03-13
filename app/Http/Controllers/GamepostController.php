@@ -13,9 +13,18 @@ use Cloudinary;
 
 class GamepostController extends Controller
 {
-    public function index(Gamepost $gamepost)
+    public function index(Request $request, Gamepost $gamepost)
     {
-        return view('gameposts/index')->with(['gameposts' => $gamepost->getPaginateByLimit()]);
+        $keyword = $request->input('keyword');
+        $query = Gamepost::query();
+        if(!empty($keyword)) {
+            $query->where('title', 'LIKE', "%{$keyword}%")
+                ->orWhere('body', 'LIKE', "%{$keyword}%");
+        }
+
+        $gameposts = $query->get();
+       
+        return view('gameposts/index')->with(['gameposts' => $gameposts,'keyword' => $keyword]);
     }
     
     public function show(Gamepost $gamepost)
@@ -50,5 +59,18 @@ class GamepostController extends Controller
     {
     $gamepost->delete();
     return redirect('/gameposts/usermypage/'. $gamepost->user->id);
+    }
+    
+    public function search(Gamepost $gamepost)
+    {
+        $dsn = "mysql:dbname=gameBlog;host=localhost;charset=utf8mb4";
+        $username = "dbuser";
+        $password = "makoto0216";
+        $options = [];
+        $pdo = new PDO($dsn, $username, $password, $options);
+        if(@$_POST["gamepost_title"] != ""){
+            $stmt = $pdo->query("SELECT * FROM gameBlog WHERE Title LIKE =%".$_POST["gamepost_title"]."%')"); 
+        }
+        return view('gameposts/search')->with(['gamepost' => $gamepost]);
     }
 }

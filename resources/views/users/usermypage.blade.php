@@ -11,7 +11,7 @@
         <h2 class = 'username'>{{ $user->name }}</h2>
         <p class = 'profile'>{{ $user->profile->body }}</p>
         <div class = 'profile_edit'>
-            <p>プロフィール：<a href="/profile/edit">編集</a></p>
+            <p>プロフィール：<a href="/profile/{{ $user->profile->id }}/edit">編集</a></p>
         </div>
         <div class = 'user_edit'>
             <p>ユーザー情報：<a href="/profile">編集</a></p>

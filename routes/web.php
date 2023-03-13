@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -42,13 +43,14 @@ Route::controller(UserController::class)->middleware(['auth'])->group(function()
 Route::controller(CommentController::class)->middleware(['auth'])->group(function(){
     Route::get('/gameposts/comments/create','commentcreate')->name('commentcreate');
     Route::post('/gameposts/comments', 'commentstore')->name('commentstore');
-   
 });
-
+    
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/profile/{profile}',[ProfileController::class, 'profile_update'])->name('profile_update');
+    Route::get('/profile/{profile}/edit',[ProfileController::class, 'profile_edit'])->name('profile_edit');
 });
 
 require __DIR__.'/auth.php';

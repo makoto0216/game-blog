@@ -3,17 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Profile;
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
+    
+    public function profile_edit(Profile $profile)
+    {
+        return view('gameposts/edit')->with(['profile' => $profile ]);
+    }
+    
+    public function profile_update(Request $request, Profile $profile)
+    {
+        $input_profile = $request['profile'];
+        $profile->fill($input_profile)->save();
+
+        return redirect('/gameposts/usermypage/' . $profile->user->id);
+    }
+    
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -27,7 +43,6 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
-        $request->profile()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
